@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Bollywood Surprise | @codecraftedbyme</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink: #ff4d8d;
+            --soft-pink: #fff0f5;
+            --dark-text: #4a4a4a;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; overflow: hidden; color: var(--dark-text);
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            width: 90%; max-width: 420px;
+            padding: 35px 25px; border-radius: 40px;
+            text-align: center; box-shadow: 0 15px 35px rgba(255, 77, 141, 0.15);
+            position: relative; border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .page { display: none; animation: slideUp 0.6s ease-out; }
+        .active { display: block; }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 { font-family: 'Pacifico', cursive; color: var(--pink); font-size: 2.2rem; margin-bottom: 20px; }
+        
+        .love-note-box {
+            background: #fffafa; border-radius: 20px; padding: 20px;
+            margin: 20px 0; border-left: 5px solid var(--pink);
+            text-align: left; font-style: italic; min-height: 150px;
+        }
+
+        input {
+            width: 100%; padding: 15px; margin: 10px 0;
+            border: 2px solid #eee; border-radius: 15px;
+            font-family: inherit; outline: none; transition: 0.3s;
+        }
+        input:focus { border-color: var(--pink); }
+
+        button {
+            background: var(--pink); color: white; border: none;
+            padding: 14px 28px; border-radius: 30px; font-weight: 600;
+            cursor: pointer; transition: 0.3s; font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(255, 77, 141, 0.3);
+        }
+        button:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255, 77, 141, 0.4); }
+
+        .date-option {
+            display: flex; align-items: center; background: white;
+            padding: 12px; margin: 10px 0; border-radius: 15px;
+            cursor: pointer; border: 1px solid #f0f0f0; transition: 0.3s;
+        }
+        .date-option:hover { background: var(--soft-pink); }
+        .date-option input { width: auto; margin-right: 15px; }
+
+        .footer {
+            position: absolute; bottom: -50px; left: 0; width: 100%;
+            text-align: center; font-size: 0.9rem;
+        }
+        .footer a { color: var(--pink); text-decoration: none; font-weight: bold; }
+
+        #shareLinkArea {
+            display: none; background: #f8f9fa; padding: 10px;
+            border-radius: 10px; font-size: 0.75rem; margin-top: 15px;
+            border: 1px dashed var(--pink); word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="setupPage" class="page">
+        <h1>Director's Cut 🎬</h1>
+        <p>Create your Filmy Proposal Link</p>
+        <input type="text" id="sInput" placeholder="Your Name (Hero/Heroine)">
+        <input type="text" id="rInput" placeholder="Partner's Name (Co-star)">
+        <input type="text" id="pInput" placeholder="Your WhatsApp Number (e.g. 919876543210)">
+        <button onclick="generateLink()">Generate Magic Link 🔗</button>
+        <div id="shareLinkArea"></div>
+    </div>
+
+    <div id="step1" class="page">
+        <h1 id="helloTitle">Hi!</h1>
+        <p>I have a little secret I've been wanting to share with you... Are you ready? ❤️</p>
+        <button onclick="nextStep(2)">Yes, show me! 🙈</button>
+    </div>
+
+    <div id="step2" class="page">
+        <h1>A Message for You 💌</h1>
+        <div class="love-note-box">
+            <p id="typewriterText"></p>
+        </div>
+        <button id="nextBtn" onclick="nextStep(3)" style="display:none;">Next 💖</button>
+    </div>
+
+    <div id="step3" class="page">
+        <h1>The Big Question... 💍</h1>
+        <p>You make my world so much brighter just by being in it. So...</p>
+        <h2 style="margin: 20px 0; color: var(--pink);">Will you be my Valentine?</h2>
+        <div id="btnGroup">
+            <button onclick="nextStep(4)">YES, I will! 🥰</button>
+            <button id="btn-no" onmouseover="moveNo()" style="background:#ccc;">No 😒</button>
+        </div>
+    </div>
+
+    <div id="step4" class="page">
+        <h1>Yayy! Best News Ever! 😍</h1>
+        <p>Pick our celebration style:</p>
+        <div id="options">
+            <label class="date-option"><input type="checkbox" value="Candle Light Dinner 🕯️"> Romantic Candle Light Dinner</label>
+            <label class="date-option"><input type="checkbox" value="Long Drive & Music 🚗"> Late Night Drive & Soft Music</label>
+            <label class="date-option"><input type="checkbox" value="Cozy Movie Marathon 🍿"> Cozy Movie Night & Popcorn</label>
+            <label class="date-option"><input type="checkbox" value="Sunset & Coffee 🌅"> Sunset Walk & Coffee</label>
+        </div>
+        <button onclick="showTicket()">Confirm Date & Send ✈️</button>
+    </div>
+
+    <div id="step5" class="page">
+        <h1>Our Date Ticket 🎫</h1>
+        <div style="border: 2px dashed var(--pink); padding: 20px; border-radius: 20px; background: #fff; text-align: left;">
+            <p style="margin-bottom: 10px;"><strong>PASSENGER:</strong> <span id="finalR" style="text-transform: uppercase;"></span></p>
+            <p style="margin-bottom: 10px;"><strong>PILOT:</strong> <span id="finalS" style="text-transform: uppercase;"></span></p>
+            <p><strong>DESTINATION:</strong> <br><span id="finalDate" style="color: var(--pink); font-weight: bold;"></span></p>
+        </div>
+        <p style="margin-top: 20px; font-size: 0.9rem;">Wait... sending confirmation to my Pilot! 💖</p>
+    </div>
+
+    <div class="footer">
+        Made with ❤️ by <a href="https://www.instagram.com/codecraftedbyme/" target="_blank">@codecraftedbyme</a>
+    </div>
+</div>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const sender = urlParams.get('from');
+    const receiver = urlParams.get('to');
+    const phone = urlParams.get('phone');
+
+    const longNote = "I wanted to take a moment to tell you how incredible you are. From the way you smile to the little things you do, everything makes me fall for you more every day. You aren't just a part of my life; you are the best part of it. ✨";
+
+    window.onload = () => {
+        if (sender && receiver && phone) {
+            document.getElementById('helloTitle').innerText = `Hi ${receiver}! ❤️`;
+            document.getElementById('finalS').innerText = sender;
+            document.getElementById('finalR').innerText = receiver;
+            nextStep(1);
+        } else {
+            document.getElementById('setupPage').classList.add('active');
+        }
+    };
+
+    function generateLink() {
+        const s = document.getElementById('sInput').value;
+        const r = document.getElementById('rInput').value;
+        const p = document.getElementById('pInput').value;
+        if(!s || !r || !p) return alert("Please fill all details!");
+        
+        const baseUrl = window.location.href.split('?')[0];
+        const finalUrl = `${baseUrl}?from=${encodeURIComponent(s)}&to=${encodeURIComponent(r)}&phone=${encodeURIComponent(p)}`;
+        
+        const area = document.getElementById('shareLinkArea');
+        area.style.display = "block";
+        area.innerText = finalUrl;
+        navigator.clipboard.writeText(finalUrl);
+        alert("Magic Link Copied! Now send it to your partner.");
+    }
+
+    function nextStep(n) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('step' + n).classList.add('active');
+        if(n === 2) startTypewriter();
+    }
+
+    function startTypewriter() {
+        let i = 0;
+        const text = document.getElementById('typewriterText');
+        text.innerHTML = "";
+        function type() {
+            if (i < longNote.length) {
+                text.innerHTML += longNote.charAt(i);
+                i++;
+                setTimeout(type, 40)
+            } else {
+                document.getElementById('nextBtn').style.display = "inline-block";
+            }
+        }
+        type();
+    }
+
+    function moveNo() {
+        const btn = document.getElementById('btn-no');
+        btn.style.position = 'fixed';
+        btn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+        btn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+    }
+
+    function showTicket() {
+        const sel = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(c => c.value);
+        if(sel.length === 0) return alert("Select at least one activity!");
+        
+        const chosen = sel.join(', ');
+        document.getElementById('finalDate').innerText = chosen;
+        nextStep(5);
+
+        // WhatsApp Integration
+        const msg = `Haye! 😍 I just accepted your Valentine's proposal! \n\nOur Date Plan: ${chosen} \n\nSee you soon, ${sender}! ❤️`;
+        const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+        
+        setTimeout(() => {
+            window.location.href = waUrl;
+        }, 2500);
+    }
+</script>
+</body>
+</html>
